@@ -8,6 +8,7 @@ cryptography==40.0.1
 defusedxml==0.7.1
 Django==3.2.18
 django-filter==22.1
+django-colorfield
 django-templated-mail==1.1.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==4.8.0
