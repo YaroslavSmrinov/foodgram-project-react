@@ -130,20 +130,20 @@ def download_shopping_cart(request):
         user=user
     )
     ingredients = []
-    for i in cart:
+    for ingredient in cart:
         ingredients.extend(
-            i.recipe.ingredients_in_recipe.all()
+            ingredient.recipe.ingredients_in_recipe.all()
         )
     ingredients_dict = {}
-    for i in ingredients:
-        if i.ingredient_id not in ingredients_dict:
-            ingredients_dict[i.ingredient_id] = 0
-        ingredients_dict[i.ingredient_id] += i.amount
+    for ingredient in ingredients:
+        if ingredient.ingredient_id not in ingredients_dict:
+            ingredients_dict[ingredient.ingredient_id] = 0
+        ingredients_dict[ingredient.ingredient_id] += ingredient.amount
     data = StringIO()
-    for i in ingredients_dict:
-        ingredient = Ingredient.objects.get(id=i)
+    for ingredient_id in ingredients_dict:
+        ingredient = Ingredient.objects.get(id=ingredient_id)
         text = f'{ingredient.name} ({ingredient.measurement_unit}) —'
-        text += f' {ingredients_dict[i]} \n'
+        text += f' {ingredients_dict[ingredient_id]} \n'
         data.write(text)
     data.seek(0)
     headers = {

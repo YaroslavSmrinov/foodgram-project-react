@@ -3,7 +3,11 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from core.models import Tag, Recipe, Ingredient, IngredientsInRecipe
-from users.models import Favorite, Follow, ShoppingCart, User
+from core.constants import (MAX_AMOUNT_OF_INGREDIENT,
+                            MAX_COOKING_TIME,
+                            MIN_AMOUNT_OF_INGREDIENT,
+                            MIN_COOKING_TIME)
+from users.models import Follow, User
 
 
 class IngredientInRecipeSerializer(serializers.ModelSerializer):
@@ -38,7 +42,7 @@ class CustomUserSerializer(UserSerializer):
         result = False
         user = self.context['request'].user
         if user.is_authenticated:
-            result = Follow.objects.filter(user=user, following=obj).exists()
+            result = user.is_subscribed.filter(following=obj).exists()
         return result
 
 
@@ -87,21 +91,28 @@ class RecipeRetrieveSerializer(serializers.ModelSerializer):
         result = False
         user = self.context['request'].user
         if user.is_authenticated:
-            result = model.objects.filter(user=user, recipe=obj).exists()
+            models_dict = {
+                'Favorite': user.favorite_list,
+                'ShoppingCart': user.shopping_cart
+            }
+            result = models_dict[model].filter(recipe=obj).exists()
         return result
 
     def get_is_favorited(self, obj):
-        return self.validator(obj, Favorite)
+        return self.validator(obj, 'Favorite')
 
     def get_is_in_shopping_cart(self, obj):
-        return self.validator(obj, ShoppingCart)
+        return self.validator(obj, 'ShoppingCart')
 
 
 class IngredientsListingSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         queryset=Ingredient.objects.all()
     )
-    amount = serializers.IntegerField(min_value=1, max_value=1000)
+    amount = serializers.IntegerField(
+        min_value=MIN_AMOUNT_OF_INGREDIENT,
+        max_value=MAX_AMOUNT_OF_INGREDIENT
+    )
 
     class Meta:
         model = IngredientsInRecipe
@@ -118,6 +129,10 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
         source='ingredients_in_recipe'
     )
     image = Base64ImageField()
+    cooking_time = serializers.IntegerField(
+        min_value=MIN_COOKING_TIME,
+        max_value=MAX_COOKING_TIME
+    )
 
     class Meta:
         model = Recipe
@@ -193,7 +208,4 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         )
 
     def get_is_subscribed(self, obj):
-        return Follow.objects.filter(
-            following_id=self.context['request'].user.id,
-            user_id=obj.following_id
-        ).exists()
+        return self.context['request'].user.is_subscribed.filter(user_id=obj.id).exists()

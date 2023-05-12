@@ -33,19 +33,17 @@ class RecipeFilter(FilterSet):
         user = self.request.user
         if value == 1:
             return queryset.filter(is_favorited__user=user)
-        elif value == 0:
+        if value == 0:
             return queryset.exclude(is_favorited__user=user)
-        else:
-            return queryset
+        return queryset
 
     def get_is_in_shopping_cart(self, queryset, name, value):
         user = self.request.user
         if value == 1:
             return queryset.filter(is_in_shopping_cart__user=user)
-        elif value == 0:
+        if value == 0:
             return queryset.exclude(is_in_shopping_cart__user=user)
-        else:
-            return queryset
+        return queryset
 
 
 class FoodgramCurrentUserOrAdminOrReadOnly(IsAuthenticatedOrReadOnly):
