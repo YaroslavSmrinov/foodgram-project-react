@@ -208,4 +208,8 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         )
 
     def get_is_subscribed(self, obj):
+        if self.context['request'].user.id == obj.id:
+            raise serializers.ValidationError(
+                'Вы пытаетесь подписаться на себя'
+            )
         return self.context['request'].user.is_subscribed.filter(user_id=obj.id).exists()

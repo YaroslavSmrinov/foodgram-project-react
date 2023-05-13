@@ -5,7 +5,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
-from rest_framework.serializers import ValidationError
 from rest_framework.permissions import AllowAny
 
 from api import serializers, utils
@@ -64,16 +63,6 @@ class SubscriptionCreateDestroyViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         following = self.get_user()
-        if (
-            following == user
-            or Follow.objects.filter(
-                user=user, following=following
-            ).exists()
-        ):
-            raise ValidationError(
-                'Ошибка: подписка уже создана '
-                + 'или вы пытаетесь подписаться на себя'
-            )
         serializer.save(following=following, user=user)
 
     def delete(self, request, *args, **kwargs):
