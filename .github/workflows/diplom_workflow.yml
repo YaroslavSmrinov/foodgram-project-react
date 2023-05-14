@@ -21,8 +21,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8
-        ls
-        cd foodgram-project-react/backend/
+        cd backend/
         pip install -r requirements.txt
         pwd
     - name: Test with flake8 and pytest
