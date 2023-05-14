@@ -31,8 +31,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         author = self.request.user
-        id = self.kwargs.get('pk')
-        serializer.save(author=author, id=id)
+        pk = self.kwargs.get('pk')
+        serializer.save(author=author, id=pk)
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
