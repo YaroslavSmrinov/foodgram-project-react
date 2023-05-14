@@ -47,3 +47,7 @@ docker compose exec backend python manage.py collectstatic
 docker compose exec backend python manage.py createsuperuser
 ```
 Переходим по [адресу](http://158.160.5.58/admin/)
+
+## Об авторах
+Backend: @irs_sm
+Frontend: [Яндекс.Практикум](https://practicum.yandex.ru/profile/python-developer-plus/)
