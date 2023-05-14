@@ -47,6 +47,9 @@ jobs:
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
+        run: |
+          pwd
+          ls
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/diplom:latest
