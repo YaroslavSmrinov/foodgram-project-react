@@ -9,7 +9,7 @@ services:
       - ./.env
 
   backend:
-    build: ../backend/
+    build: boynextdo0r/diplom:latest
     restart: always
     volumes:
       - static_volume:/app/backend_static/
