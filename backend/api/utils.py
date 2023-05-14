@@ -1,8 +1,7 @@
-from django_filters.rest_framework import (
-    AllValuesMultipleFilter, FilterSet, NumberFilter
-)
+from django_filters.rest_framework import (AllValuesMultipleFilter, FilterSet,
+                                           NumberFilter)
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly
 from rest_framework.renderers import BaseRenderer
 
 from core.models import Recipe

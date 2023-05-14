@@ -2,10 +2,9 @@ from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from .constants import (MAX_AMOUNT_OF_INGREDIENT,
-                        MAX_COOKING_TIME,
-                        MIN_AMOUNT_OF_INGREDIENT,
-                        MIN_COOKING_TIME)
+
+from .constants import (MAX_AMOUNT_OF_INGREDIENT, MAX_COOKING_TIME,
+                        MIN_AMOUNT_OF_INGREDIENT, MIN_COOKING_TIME)
 
 User = get_user_model()
 
@@ -120,8 +119,8 @@ class IngredientsInRecipe(models.Model):
         verbose_name_plural = 'Игнредиенты в рецептах'
 
     def __str__(self):
-        return f'{self.ingredient.name} в рецепте ' \
-               f'{self.recipe.name} в количестве {self.amount}.'
+        return (f'{self.ingredient.name} в рецепте '
+                f'{self.recipe.name} в количестве {self.amount}.')
 
 
 class TagsInRecipe(models.Model):

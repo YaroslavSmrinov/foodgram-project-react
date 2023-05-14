@@ -4,11 +4,11 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from api import serializers, utils
-from core.models import Tag, Ingredient, Recipe
+from core.models import Ingredient, Recipe, Tag
 from users.models import Favorite, Follow, ShoppingCart, User
 
 

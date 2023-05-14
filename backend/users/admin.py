@@ -1,6 +1,6 @@
 from django.contrib.admin import ModelAdmin, site
 
-from .models import Follow, Favorite, ShoppingCart
+from .models import Favorite, Follow, ShoppingCart
 
 
 class FollowAdmin(ModelAdmin):

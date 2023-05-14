@@ -1,8 +1,8 @@
 from django.contrib.admin import ModelAdmin, register, site
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Ingredient, IngredientsInRecipe, Recipe, Tag
-from .models import TagsInRecipe, User
+from .models import (Ingredient, IngredientsInRecipe, Recipe, Tag,
+                     TagsInRecipe, User)
 
 site.unregister(User)
 

@@ -2,11 +2,9 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
-from core.models import Tag, Recipe, Ingredient, IngredientsInRecipe
-from core.constants import (MAX_AMOUNT_OF_INGREDIENT,
-                            MAX_COOKING_TIME,
-                            MIN_AMOUNT_OF_INGREDIENT,
-                            MIN_COOKING_TIME)
+from core.constants import (MAX_AMOUNT_OF_INGREDIENT, MAX_COOKING_TIME,
+                            MIN_AMOUNT_OF_INGREDIENT, MIN_COOKING_TIME)
+from core.models import Ingredient, IngredientsInRecipe, Recipe, Tag
 from users.models import Follow, User
 
 
@@ -212,4 +210,5 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Вы пытаетесь подписаться на себя'
             )
-        return self.context['request'].user.is_subscribed.filter(user_id=obj.id).exists()
+        return self.context['request'].user.is_subscribed.filter(
+            user_id=obj.id).exists()
