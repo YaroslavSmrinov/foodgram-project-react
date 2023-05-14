@@ -1,6 +1,5 @@
 FROM python:3.10-slim
 
-RUN 
 WORKDIR /app
 
 COPY ./requirements.txt .
